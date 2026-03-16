@@ -139,7 +139,7 @@ input,textarea { font-family:var(--font); }
 .btn-primary:active { transform:scale(.98); }
 [data-theme="dark"] .btn-primary { color:#212121; }
 
-.sidebar { width:var(--sidebar-width);min-width:var(--sidebar-width);height:100vh;background:var(--bg-sidebar);border-right:1px solid var(--border-color);display:flex;flex-direction:column;overflow:hidden;transition:transform var(--tr),background var(--tr);z-index:200;flex-shrink:0; }
+.sidebar { width:var(--sidebar-width);min-width:var(--sidebar-width);height:80vh;background:var(--bg-sidebar);border-right:1px solid var(--border-color);display:flex;flex-direction:column;overflow:hidden;transition:transform var(--tr),background var(--tr);z-index:200;flex-shrink:0; }
 .sidebar-header { display:flex;align-items:center;justify-content:space-between;padding:13px 12px;border-bottom:1px solid var(--border-color); }
 .sidebar-logo { display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-sidebar); }
 .sidebar-section-label { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-sidebar-muted);padding:13px 14px 5px; }
@@ -154,7 +154,7 @@ input,textarea { font-family:var(--font); }
 .sidebar-action-btn:hover { background:var(--bg-sidebar-hover); }
 .sidebar-overlay { display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:199; }
 
-.main-wrap { flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;min-width:0; }
+.main-wrap { flex:1;display:flex;flex-direction:column;height:80vh;overflow:hidden;min-width:0; }
 .topbar { height:52px;min-height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;border-bottom:1px solid var(--border-color);background:var(--bg-primary);transition:background var(--tr),border-color var(--tr); }
 .topbar-title { font-size:14px;font-weight:600;color:var(--text-primary);flex:1;text-align:center; }
 .icon-btn { width:34px;height:34px;border:none;background:none;color:var(--text-primary);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-sm);transition:background var(--tr);flex-shrink:0; }
@@ -244,7 +244,7 @@ textarea#user-input::placeholder { color:var(--text-tertiary); }
 
 @media (max-width:768px) {
   :root { --sidebar-width:280px; }
-  .sidebar { position:fixed;top:0;left:0;height:100vh;transform:translateX(-100%);transition:transform .25s ease; }
+  .sidebar { position:fixed;top:0;left:0;height:80vh;transform:translateX(-100%);transition:transform .25s ease; }
   .sidebar.open { transform:translateX(0); }
   .sidebar-overlay.open { display:block; }
   .suggestion-grid { grid-template-columns:1fr; }

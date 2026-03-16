@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Prompt Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="logo.jpg">
+<link rel="shortcut icon" href="logo.jpg">
+</head>
+<body>
+
+  <!-- Settings / API Modal -->
+  <div id="api-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <div class="modal-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </div>
+      <h2 id="modal-title">API Settings</h2>
+      <p class="modal-subtitle">Choose your AI provider. All keys are saved locally in your browser only.</p>
+
+      <!-- Provider tabs -->
+      <div class="provider-tabs" role="tablist">
+        <button class="provider-tab active" data-provider="groq" role="tab" aria-selected="true">
+          Groq
+          <span class="tab-free-badge">Free</span>
+        </button>
+        <button class="provider-tab" data-provider="gemini" role="tab" aria-selected="false">
+          Gemini
+        </button>
+        <button class="provider-tab" data-provider="openai" role="tab" aria-selected="false">
+          OpenAI
+        </button>
+        <button class="provider-tab" data-provider="anthropic" role="tab" aria-selected="false">
+          Anthropic
+        </button>
+      </div>
+
+      <!-- Groq panel — RECOMMENDED FREE DEFAULT -->
+      <div id="panel-groq" class="provider-panel active">
+        <div class="free-notice">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Recommended — 100% free, no credit card needed
+        </div>
+        <p class="panel-note">Uses <strong>Llama 3.3 70B</strong> via Groq. Get your free key in under 60 seconds — no payment required.</p>
+        <div class="key-input-wrap">
+          <input type="password" id="groq-key-input" placeholder="gsk_..." autocomplete="off" spellcheck="false" />
+          <button class="eye-btn toggle-vis" data-target="groq-key-input" aria-label="Toggle visibility">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <p class="panel-link">👉 Get free key at <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys</a> (sign up → Create API Key → done)</p>
+      </div>
+
+      <!-- Gemini panel -->
+      <div id="panel-gemini" class="provider-panel">
+        <p class="panel-note">Uses <strong>Gemini 2.0 Flash</strong>. Free tier available but quota is limited per key.</p>
+        <div class="key-input-wrap">
+          <input type="password" id="gemini-key-input" placeholder="AIza..." autocomplete="off" spellcheck="false" />
+          <button class="eye-btn toggle-vis" data-target="gemini-key-input" aria-label="Toggle visibility">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <p class="panel-link">Get key at <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com</a></p>
+      </div>
+
+      <!-- OpenAI panel -->
+      <div id="panel-openai" class="provider-panel">
+        <p class="panel-note">Uses <strong>GPT-4o</strong>. Requires a paid OpenAI account.</p>
+        <div class="key-input-wrap">
+          <input type="password" id="openai-key-input" placeholder="sk-proj-..." autocomplete="off" spellcheck="false" />
+          <button class="eye-btn toggle-vis" data-target="openai-key-input" aria-label="Toggle visibility">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <p class="panel-link">Get key at <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com</a></p>
+      </div>
+
+      <!-- Anthropic panel -->
+      <div id="panel-anthropic" class="provider-panel">
+        <p class="panel-note">Uses <strong>Claude Sonnet 4.5</strong>. Requires a paid Anthropic account.</p>
+        <div class="key-input-wrap">
+          <input type="password" id="anthropic-key-input" placeholder="sk-ant-api03-..." autocomplete="off" spellcheck="false" />
+          <button class="eye-btn toggle-vis" data-target="anthropic-key-input" aria-label="Toggle visibility">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <p class="panel-link">Get key at <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a></p>
+      </div>
+
+      <button id="save-api-key" class="btn-primary">Save &amp; Start</button>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar" role="complementary">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+  <img src="logo.jpg" alt="Logo">
+        <span>Prompt Engineer</span>
+      </div>
+      <button id="new-chat-btn" class="icon-btn" aria-label="New chat">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+    </div>
+    <div class="sidebar-section-label">Chats</div>
+    <nav id="chat-history-list" class="chat-history"></nav>
+    <div class="sidebar-footer">
+      <div id="provider-badge" class="provider-badge">
+        <span id="provider-dot" class="provider-dot groq"></span>
+        <span id="provider-label">Groq — Llama 3.3 70B</span>
+      </div>
+      <button id="settings-btn" class="sidebar-action-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        <span>API Settings</span>
+      </button>
+      <button id="theme-btn" class="sidebar-action-btn">
+        <svg id="theme-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <span id="theme-label">Light mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <div class="main-wrap">
+    <header class="topbar">
+      <button id="sidebar-toggle" class="icon-btn" aria-label="Toggle sidebar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <span class="topbar-title" id="topbar-title">AI Prompt Engineer</span>
+      <button id="clear-btn" class="icon-btn" aria-label="Clear chat">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+        </svg>
+      </button>
+    </header>
+
+    <main id="chat-area" class="chat-area">
+      <div id="welcome-screen" class="welcome-screen">
+        <div class="welcome-icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h1>AI Prompt Engineer</h1>
+        <p>Describe any task and I'll craft an optimized prompt, plus recommend the best AI models.</p>
+        <div class="suggestion-grid">
+          <button class="suggestion-chip" data-text="Write a compelling short story about a robot learning to feel emotions">
+            <span class="chip-icon">✍️</span>Write a story about a robot learning emotions
+          </button>
+          <button class="suggestion-chip" data-text="Debug my Python code that handles async API requests and crashes randomly">
+            <span class="chip-icon">🐛</span>Debug Python async API code
+          </button>
+          <button class="suggestion-chip" data-text="Solve and explain a complex calculus optimization problem step by step">
+            <span class="chip-icon">📐</span>Solve a calculus optimization problem
+          </button>
+          <button class="suggestion-chip" data-text="Analyze the logical reasoning behind Kant's categorical imperative">
+            <span class="chip-icon">🧠</span>Analyze Kant's categorical imperative
+          </button>
+        </div>
+      </div>
+      <div id="messages-container" class="messages-container hidden" role="log"></div>
+    </main>
+
+    <footer class="input-area">
+      <div class="input-box">
+        <textarea id="user-input" placeholder="Describe the task you need a prompt for..." rows="1" aria-label="Task description"></textarea>
+        <button id="send-btn" class="send-btn" aria-label="Send" disabled>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>
+          </svg>
+        </button>
+      </div>
+      <p class="input-disclaimer">AI Prompt Engineer can make mistakes. Review generated prompts before use.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
